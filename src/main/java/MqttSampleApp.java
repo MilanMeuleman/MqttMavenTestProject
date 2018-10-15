@@ -6,11 +6,15 @@ public class MqttSampleApp {
 
     public static void main(String[] args) {
 
-        Blackbox blackbox1 = new Blackbox("[Blackbox #1]");
+        String topicCLA = "test-mqtt/cla/usagedata";
+        String topicBlackbox = "test-mqtt/blackbox/speed";
+        String topicDashcam = "test-mqtt/dashcam/images";
+
+        Blackbox blackbox1 = new Blackbox("[Blackbox #1]", topicBlackbox);
         blackbox1.connect();
-        CLA cla1 = new CLA("[CLA #1]");
+        CLA cla1 = new CLA("[CLA #1]", topicCLA);
         cla1.connect();
-        Dashcam dashcam1 = new Dashcam("[Dashcam #1]");
+        Dashcam dashcam1 = new Dashcam("[Dashcam #1]", topicDashcam);
         dashcam1.connect();
 
         Driver driver1 = new Driver("Milan Meuleman");
@@ -19,7 +23,7 @@ public class MqttSampleApp {
         driver1.addDevice(dashcam1);
 
         try {
-            while (true) {
+        while (true) {
                 try {
                     Thread.sleep(5000);
                     int r = ThreadLocalRandom.current().nextInt(1, 11);

@@ -8,8 +8,8 @@ public class Dashcam extends Device {
 
     public static final String GET_IMAGES_COMMAND_KEY = "GET_IMAGES";
 
-    public Dashcam(String name) {
-        super(name);
+    public Dashcam(String name, String topic) {
+        super(name, topic);
     }
 
     public String getName() {
@@ -18,12 +18,7 @@ public class Dashcam extends Device {
 
     public void messageArrived(String topic, MqttMessage message) throws Exception {
 
-        // A message has arrived from the MQTT broker
-        // The MQTT broker doesn't send back
-        // an acknowledgment to the server until
-        // this method returns cleanly
-
-        if (!topic.equals(TOPIC)) {
+        if (!topic.equals(topic)) {
             return;
         }
 
@@ -42,7 +37,6 @@ public class Dashcam extends Device {
     }
 
     public void deliveryComplete(IMqttDeliveryToken token) {
-        // Delivery for a message has been completed
-        // and all acknowledgments have been received
+        // Delivery for a message has been completed and all acknowledgments have been received
     }
 }
