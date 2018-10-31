@@ -4,11 +4,11 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Dashcam extends Device {
+public class Thermometer extends Device {
 
-    public static final String GET_IMAGES_COMMAND_KEY = "GET_IMAGES";
+    public static final String GET_TEMPERATURE_COMMAND_KEY = "GET_TEMPERATURE";
 
-    public Dashcam(String name, String topic) {
+    public Thermometer(String name, String topic) {
         super(name, topic);
     }
 
@@ -30,9 +30,9 @@ public class Dashcam extends Device {
             return;
         }
 
-        if (keyValue[0].equals(COMMAND_KEY) && keyValue[1].equals(GET_IMAGES_COMMAND_KEY) && keyValue[2].equals(name)) {
-            int imageId = ThreadLocalRandom.current().nextInt(1, 1000);
-            System.out.println(String.format("%s Image send with ID : %d", name, imageId));
+    if (keyValue[0].equals(COMMAND_KEY) && keyValue[1].equals(GET_TEMPERATURE_COMMAND_KEY) && keyValue[2].equals(name)) {
+            int temperature = ThreadLocalRandom.current().nextInt(1, 40);
+            System.out.println(String.format("%s Current temperature: %d degrees", name, temperature));
         }
     }
 
