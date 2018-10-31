@@ -1,12 +1,14 @@
 import org.eclipse.paho.client.mqttv3.*;
 
+import java.sql.Time;
+import java.time.Instant;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Blackbox extends Device {
+public class IpCamera extends Device {
 
-    public static final String GET_SPEED_COMMAND_KEY = "GET_SPEED";
+    public static final String GET_DETECTION_INFORMATION_KEY = "SEND_DETECTION_INFORMATION";
 
-    public Blackbox(String name, String topic) {
+    public IpCamera(String name, String topic) {
         super(name, topic);
     }
     public String getName() {
@@ -27,9 +29,10 @@ public class Blackbox extends Device {
             return;
         }
 
-        if (keyValue[0].equals(COMMAND_KEY) && keyValue[1].equals(GET_SPEED_COMMAND_KEY) && keyValue[2].equals(name)) {
-            int altitudeInFeet = ThreadLocalRandom.current().nextInt(1, 160);
-            System.out.println(String.format("%s speed: %d km/h", name, altitudeInFeet));
+        if (keyValue[0].equals(COMMAND_KEY) && keyValue[1].equals(GET_DETECTION_INFORMATION_KEY) && keyValue[2].equals(name)) {
+            Instant timeStamp = Instant.now();
+            String timeStampString = timeStamp.toString();
+            System.out.println(String.format("%s Person detected at: %s", name, timeStampString));
         }
     }
 

@@ -4,12 +4,12 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CLA extends Device {
+public class ElectricityMeter extends Device {
 
-    public static final String GET_USAGEDATA_COMMAND_KEY = "GET_USAGEDATA";
+    public static final String GET_ELECTRICITY_USAGE_COMMAND_KEY = "GET_ELECTRICITY_USAGE";
+    public int totalUsage;
 
-
-    public CLA(String name, String topic) {
+    public ElectricityMeter(String name, String topic) {
         super(name, topic);
     }
     public String getName() {
@@ -30,9 +30,10 @@ public class CLA extends Device {
             return;
         }
 
-        if (keyValue[0].equals(COMMAND_KEY) && keyValue[1].equals(GET_USAGEDATA_COMMAND_KEY) && keyValue[2].equals(name)) {
-            int usageInSeconds = ThreadLocalRandom.current().nextInt(1, 200);
-            System.out.println(String.format("%s has been used for : %d seconds", name, usageInSeconds));
+        if (keyValue[0].equals(COMMAND_KEY) && keyValue[1].equals(GET_ELECTRICITY_USAGE_COMMAND_KEY) && keyValue[2].equals(name)) {
+            int usageInKw = ThreadLocalRandom.current().nextInt(1, 100);
+            totalUsage = totalUsage + usageInKw;
+            System.out.println(String.format("%s Today's electricity usage: %d Kw", name, totalUsage));
         }
     }
 

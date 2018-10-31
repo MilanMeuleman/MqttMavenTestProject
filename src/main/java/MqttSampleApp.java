@@ -10,17 +10,17 @@ public class MqttSampleApp {
         String topicBlackbox = "test-mqtt/blackbox/speed";
         String topicDashcam = "test-mqtt/dashcam/images";
 
-        Blackbox blackbox1 = new Blackbox("[Blackbox #1]", topicBlackbox);
-        blackbox1.connect();
-        CLA cla1 = new CLA("[CLA #1]", topicCLA);
-        cla1.connect();
-        Dashcam dashcam1 = new Dashcam("[Dashcam #1]", topicDashcam);
-        dashcam1.connect();
+        IpCamera ipCamera1 = new IpCamera("[IpCamera #1]", topicBlackbox);
+        ipCamera1.connect();
+        ElectricityMeter electricityMeter1 = new ElectricityMeter("[ElectricityMeter #1]", topicCLA);
+        electricityMeter1.connect();
+        Thermometer thermometer1 = new Thermometer("[Thermometer #1]", topicDashcam);
+        thermometer1.connect();
 
         Driver driver1 = new Driver("Milan Meuleman");
-        driver1.addDevice(blackbox1);
-        driver1.addDevice(cla1);
-        driver1.addDevice(dashcam1);
+        driver1.addDevice(ipCamera1);
+        driver1.addDevice(electricityMeter1);
+        driver1.addDevice(thermometer1);
 
         try {
         while (true) {
@@ -28,15 +28,15 @@ public class MqttSampleApp {
                     Thread.sleep(5000);
                     int r = ThreadLocalRandom.current().nextInt(1, 11);
 
-                    if ((r < 5) && blackbox1.isConnected()) {
-                        blackbox1.publishCommand(Blackbox.GET_SPEED_COMMAND_KEY, blackbox1.getName());
+                    if ((r < 5) && ipCamera1.isConnected()) {
+                        ipCamera1.publishCommand(IpCamera.GET_DETECTION_INFORMATION_KEY, ipCamera1.getName());
                     } else {
-                        if (cla1.isConnected()) {
-                            cla1.publishCommand(CLA.GET_USAGEDATA_COMMAND_KEY, cla1.getName());
+                        if (electricityMeter1.isConnected()) {
+                            electricityMeter1.publishCommand(ElectricityMeter.GET_ELECTRICITY_USAGE_COMMAND_KEY, electricityMeter1.getName());
                         }
 
-                        if (dashcam1.isConnected()) {
-                            dashcam1.publishCommand(Dashcam.GET_IMAGES_COMMAND_KEY, dashcam1.getName());
+                        if (thermometer1.isConnected()) {
+                            thermometer1.publishCommand(Thermometer.GET_TEMPERATURE_COMMAND_KEY, thermometer1.getName());
                         }
                     }
                 } catch (InterruptedException e) {
@@ -46,25 +46,25 @@ public class MqttSampleApp {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (blackbox1.isConnected()) {
+            if (ipCamera1.isConnected()) {
                 try {
-                    blackbox1.client.disconnect();
+                    ipCamera1.client.disconnect();
                 } catch (MqttException e) {
                     e.printStackTrace();
                 }
             }
 
-            if (cla1.isConnected()) {
+            if (electricityMeter1.isConnected()) {
                 try {
-                    cla1.client.disconnect();
+                    electricityMeter1.client.disconnect();
                 } catch (MqttException e) {
                     e.printStackTrace();
                 }
             }
 
-            if (dashcam1.isConnected()) {
+            if (thermometer1.isConnected()) {
                 try {
-                    dashcam1.client.disconnect();
+                    thermometer1.client.disconnect();
                 } catch (MqttException e) {
                     e.printStackTrace();
                 }
