@@ -1,8 +1,5 @@
 import org.eclipse.paho.client.mqttv3.*;
-
-import java.sql.Time;
 import java.time.Instant;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class IpCamera extends Device {
 

@@ -6,21 +6,21 @@ public class MqttSampleApp {
 
     public static void main(String[] args) {
 
-        String topicCLA = "test-mqtt/cla/usagedata";
-        String topicBlackbox = "test-mqtt/blackbox/speed";
-        String topicDashcam = "test-mqtt/dashcam/images";
+        String topicIpCamera = "test-mqtt/ipCamera/detection";
+        String topicElectricityMeter = "test-mqtt/elektricityMeter/usage";
+        String topicThermmometer = "test-mqtt/thermometer/temperature";
 
-        IpCamera ipCamera1 = new IpCamera("[IpCamera #1]", topicBlackbox);
+        IpCamera ipCamera1 = new IpCamera("[IpCamera #1]", topicIpCamera);
         ipCamera1.connect();
-        ElectricityMeter electricityMeter1 = new ElectricityMeter("[ElectricityMeter #1]", topicCLA);
+        ElectricityMeter electricityMeter1 = new ElectricityMeter("[ElectricityMeter #1]", topicElectricityMeter);
         electricityMeter1.connect();
-        Thermometer thermometer1 = new Thermometer("[Thermometer #1]", topicDashcam);
+        Thermometer thermometer1 = new Thermometer("[Thermometer #1]", topicThermmometer);
         thermometer1.connect();
 
-        Driver driver1 = new Driver("Milan Meuleman");
-        driver1.addDevice(ipCamera1);
-        driver1.addDevice(electricityMeter1);
-        driver1.addDevice(thermometer1);
+        Building building1 = new Building("Milan Meuleman");
+        building1.addDevice(ipCamera1);
+        building1.addDevice(electricityMeter1);
+        building1.addDevice(thermometer1);
 
         try {
         while (true) {

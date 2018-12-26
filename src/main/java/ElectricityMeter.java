@@ -1,7 +1,4 @@
 import org.eclipse.paho.client.mqttv3.*;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-
-import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ElectricityMeter extends Device {
